@@ -23,3 +23,4 @@ public class VulnerableXSSServlet extends HttpServlet {
     }
 }
 
+
