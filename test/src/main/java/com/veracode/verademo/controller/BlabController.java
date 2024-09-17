@@ -451,20 +451,18 @@ public class BlabController {
 				+ " SUM(if(listeners.listener=?, 1, 0)) as listeners,"
 				+ " SUM(if(listeners.status='Active',1,0)) as listening"
 				+ " FROM users LEFT JOIN listeners ON users.username = listeners.blabber"
-				+ " WHERE users.username NOT IN (\"admin\",?)" + " GROUP BY users.username" + " ORDER BY " + sort + ";";
-
+		+ " WHERE users.username NOT IN (\"admin\", :s)" + " GROUP BY users.username" + " ORDER BY " + sort + ";";
 		try {
-			logger.info("Getting Database connection");
-			// Get the Database Connection
-			Class.forName("com.mysql.jdbc.Driver");
-			connect = DriverManager.getConnection(Constants.create().getJdbcConnectionString());
-
-			// Find the Blabbers
-			logger.info(blabbersSql);
-			blabberQuery = connect.prepareStatement(blabbersSql);
-			blabberQuery.setString(1, username);
-			blabberQuery.setString(2, username);
-			ResultSet blabbersResults = blabberQuery.executeQuery();
+		    logger.info("Getting Database connection");
+		    // Get the Database Connection
+		    Class.forName("com.mysql.jdbc.Driver");
+		    connect = DriverManager.getConnection(Constants.create().getJdbcConnectionString());
+		    // Find the Blabbers
+		    logger.info(blabbersSql);
+		    blabberQuery = connect.prepareStatement(blabbersSql);
+		    blabberQuery.setString(1, username);
+		    blabberQuery.setString(2, username);
+		    ResultSet blabbersResults = blabberQuery.executeQuery();
 			/* END EXAMPLE VULNERABILITY */
 
 			List<Blabber> blabbers = new ArrayList<Blabber>();
